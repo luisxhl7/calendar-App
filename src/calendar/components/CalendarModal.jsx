@@ -29,8 +29,8 @@ export const CalendarModal = () => {
     const [formValues, setFormValues] = useState({
         title: "",
         notes: "",
-        start: new Date(),
-        end: addHours(new Date(), 2),
+        dateInit: new Date(),
+        dateEnd: addHours(new Date(), 2),
     });
     const { isDateModalOpen, closeDateModal } = useUiStore()
     const { activeEvent, startSavingEvent } = useCalendarStore()
@@ -71,7 +71,7 @@ export const CalendarModal = () => {
         setFormSubmitted(true)
         console.log(formValues);
 
-        const difference = differenceInSeconds( formValues.end, formValues.start)
+        const difference = differenceInSeconds( formValues.dateEnd, formValues.dateInit)
         if (isNaN(difference) || difference <= 0) {
             Swal.fire('Fechas incorrectas', 'Revisar fechas ingresadas', 'error')
             return
@@ -101,9 +101,9 @@ export const CalendarModal = () => {
             <div className="form-group mb-2">
                 <label>Fecha y hora inicio</label>
                 <DatePicker
-                    minDate={formValues.start}
-                    selected={formValues.start}
-                    onChange={(event) => onDateChanged(event, 'start')}
+                    minDate={formValues.dateInit}
+                    selected={formValues.dateInit}
+                    onChange={(event) => onDateChanged(event, 'dateInit')}
                     className="form-control"
                     dateFormat='Pp'
                     showTimeSelect
@@ -115,8 +115,8 @@ export const CalendarModal = () => {
             <div className="form-group mb-2">
                 <label>Fecha y hora fin</label>
                 <DatePicker
-                    selected={formValues.end}
-                    onChange={(event) => onDateChanged(event, 'end')}
+                    selected={formValues.dateEnd}
+                    onChange={(event) => onDateChanged(event, 'dateEnd')}
                     className={`form-control`}
                     dateFormat='Pp'
                     showTimeSelect
